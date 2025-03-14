@@ -1,0 +1,12 @@
+name = "private-s3-fetch"
+main = "src/index.js"
+compatibility_date = "2024-03-14"
+
+route = { pattern = "signedurl.whereismypacket.net/s3/*", zone_name = "whereismypacket.net" }
+
+[vars]
+AWS_REGION = "us-east-1"
+S3_BUCKET = "signedurl-cloudflare"
+PATH_PREFIX = "/s3"  # Path prefix to remove from incoming requests
+S3_PATH_PREFIX = "files/pdfs/"  # Path prefix to add when requesting from S3
+REMOVE_QUERY_PARAMS = "token,signature,auth"  # Query parameters to remove when forwarding to S3
