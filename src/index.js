@@ -85,13 +85,8 @@ export default {
         });
       }
       
-      // Create a new response with appropriate cache headers
+      // Create a new response with the original body
       const modifiedResponse = new Response(response.body, response);
-      
-      // Add caching headers if the response is successful
-      if (response.status === 200) {
-        modifiedResponse.headers.set('Cache-Control', 'public, max-age=86400'); // Cache for 1 day
-      }
       
       // Return the modified response
       return modifiedResponse;

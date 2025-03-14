@@ -1,4 +1,4 @@
-# S3 Private Content Access Worker
+# Private S3 Fetch Worker
 
 This project provides a Cloudflare Worker that securely proxies requests to private content stored in Amazon S3 buckets.
 
@@ -27,8 +27,8 @@ This project provides a Cloudflare Worker that securely proxies requests to priv
 
 3. Create a new project:
    ```bash
-   mkdir s3-worker
-   cd s3-worker
+   mkdir private-s3-fetch
+   cd private-s3-fetch
    wrangler init
    ```
 
@@ -39,7 +39,7 @@ This project provides a Cloudflare Worker that securely proxies requests to priv
 
 5. Update your `wrangler.toml` file:
    ```toml
-   name = "s3-worker"
+   name = "private-s3-fetch"
    main = "src/index.js"
    compatibility_date = "2024-03-14"
    
@@ -140,27 +140,6 @@ https://signedurl-cloudflare.s3.us-east-1.amazonaws.com/files/pdfs/mypdf.pdf
 
 But through the worker, users can access the file without needing AWS credentials themselves.
 
-## Cache Configuration
-
-For optimal performance with CloudFlare caching:
-
-1. Go to Cloudflare dashboard > Caching > Configuration
-2. Set appropriate Edge TTL and Browser TTL settings
-3. For cached content, the worker adds:
-   ```
-   Cache-Control: public, max-age=86400
-   ```
-   This caches content for 24 hours by default.
-
-## Switching from R2 to S3
-
-If you're migrating from Cloudflare R2 to Amazon S3, note these key differences:
-
-1. **Authentication**: S3 uses AWS Signature V4, while R2 used Cloudflare's authentication
-2. **Endpoint Structure**: S3 endpoints follow the pattern `https://bucket-name.s3.region.amazonaws.com/`
-3. **Headers**: S3 requires specific AWS authentication headers
-4. **Permissions**: S3 uses AWS IAM for access control
-5. **Path Structure**: You can use the `PATH_PREFIX` and `S3_PATH_PREFIX` environment variables to map your existing URL paths to the appropriate S3 paths
 
 ## Troubleshooting
 
@@ -178,8 +157,6 @@ If you're migrating from Cloudflare R2 to Amazon S3, note these key differences:
     }
   ]
   ```
-
-- **Cache Issues**: Verify Cloudflare cache settings in the dashboard
 
 ## Security Notes
 
